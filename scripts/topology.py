@@ -26,7 +26,7 @@ def create_topology():
     info('*** Creating hosts and routers\n')
 
     h1 = net.addHost('h1', ip='10.0.1.2/24')
-    h2 = net.addHost('h2', ip='10.0.4.2/24')
+    h2 = net.addHost('h2', ip='10.0.3.2/24')
 
     r1 = net.addHost('r1', cls=Router)
     r2 = net.addHost('r2', cls=Router)
@@ -57,17 +57,17 @@ def create_topology():
 
     info('*** Configuring IP addresses and routes\n')
 
-    r1.setIP('10.0.12.1/24', intf='r1-eth1')
-    r2.setIP('10.0.12.2/24', intf='r2-eth0')
-
-    r1.setIP('10.0.13.1/24', intf='r1-eth2')
-    r2.setIP('10.0.32.2/24', intf='r2-eth1')
+    r1.setIP('10.0.2.1/24', intf='r1-eth1')
+    r2.setIP('10.0.2.2/24', intf='r2-eth0')
 
     r1.setIP('10.0.1.1/24', intf='r1-eth0')
-    r2.setIP('10.0.4.1/24', intf='r2-eth2')
+    r2.setIP('10.0.3.1/24', intf='r2-eth2')
 
     h1.cmd('ip route add default via 10.0.1.1')
-    h2.cmd('ip route add default via 10.0.4.1')
+    h2.cmd('ip route add default via 10.0.3.1')
+
+    r1.cmd('ip route add 10.0.3.0/24 via 10.0.2.2')
+    r2.cmd('ip route add 10.0.1.0/24 via 10.0.2.1')
 
     info('*** Starting topology CLI\n')
 
